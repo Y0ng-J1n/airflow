@@ -3,11 +3,11 @@ import datetime
 
 from airflow import DAG
 from airflow.decorators import task
-from airflow.operators.python import PythonOperators
+from airflow.operators.python import PythonOperator
 
 with DAG(
     dag_id="dags_python_template",
-    strat_date=pendulum.datetime(2026, 1, 1, tz="Asia/Seoul"),
+    start_date=pendulum.datetime(2026, 1, 1, tz="Asia/Seoul"),
     catchup=False
 ) as dag:
 
@@ -15,7 +15,7 @@ with DAG(
         print(start_date)
         print(end_date)
 
-    python_t1 = PythonOperators(
+    python_t1 = PythonOperator(
         task_id='python_t1',
         python_callable=python_func1,
         op_kwargs={'start_date': '{{date_interval_start | ds}}', 'end_date': '{{date_interval_end | ds}}'}
