@@ -2,7 +2,7 @@ import pendulum
 
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
-from airflow.utils.edgemodifire import Label
+from airflow.utils.edgemodifier import Label
 
 with DAG(
     dag_id='dags_empty_with_edge_label',
