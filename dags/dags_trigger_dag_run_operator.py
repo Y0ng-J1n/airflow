@@ -2,7 +2,7 @@ import pendulum
 
 from airflow import DAG
 from airflow.operators.bash import BashOperator
-from airflow.operators.trigger.dagrun import TriggerDagRunOperator
+from airflow.providers.standard.operators.trigger_dagrun import TriggerDagRunOperator
 
 with DAG(
     dag_id='dags_trigger_dag_run_operator',
