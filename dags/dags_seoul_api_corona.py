@@ -9,20 +9,20 @@ with DAG(
     start_date=pendulum.datetime(2026, 1, 1, tz='Asia/Seoul'),
     catchup=False
 ) as dag:
-    '''서울시 코로나 19 확진자 발생동향'''
-    tb_corona19_cnt_status = SeoulApiToCsvOperator(
-        task_id='tb_corona19_cnt_status',
-        dataset_nm='TbCorona19CntStatus',
-        path='/opt/airflow/files/TbCorona19CntStatus/{{data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}',
-        file_name='TbCorona19CntStatus.csv'
+    '''서울시 세척제 제조업 현황'''
+    wash_manu_task = SeoulApiToCsvOperator(
+        task_id='wash_manu_task',
+        dataset_nm='publicHygieneBizCleaningProducts',
+        path='/opt/airflow/files/publicHygieneBizCleaningProducts/{{data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}',
+        file_name='publicHygieneBizCleaningProducts.csv'
     )
 
-    '''서울시 코로나 19 백신 예방접종 현황'''
-    tv_corona19_vaccine_stat_new = SeoulApiToCsvOperator(
-        task_id='tv_corona19_vaccine_stat_new',
-        dataset_nm='tvCorona19VaccinestatNew',
-        path='/opt/airflow/files/tvCorona19VaccinestatNew/{{data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}',
-        file_name='tvCorona19VaccinestatNew.csv'
+    '''서울시 위생처리업 현황'''
+    hygine_manu_task = SeoulApiToCsvOperator(
+        task_id='hygine_manu_task',
+        dataset_nm='seoulPublicHygineBiz',
+        path='/opt/airflow/files/seoulPublicHygineBiz/{{data_interval_end.in_timezone("Asia/Seoul") | ds_nodash}}',
+        file_name='seoulPublicHygineBiz.csv'
     )
 
-    tb_corona19_cnt_status >> tv_corona19_vaccine_stat_new
+    wash_manu_task >> hygine_manu_task
